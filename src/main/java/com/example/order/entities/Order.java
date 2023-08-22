@@ -2,10 +2,8 @@ package com.example.order.entities;
 
 import com.example.order.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldNameConstants;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -45,11 +43,21 @@ public class Order implements Serializable {
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
-    public Order(Long id, Instant moment, Integer orderStatus, User client) {
+    public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
         this.id = id;
         this.moment = moment;
-        this.orderStatus = orderStatus;
         this.client = client;
+        setOrderStatus(orderStatus);
+    }
+
+    public OrderStatus getOrderStatus() {
+        return OrderStatus.valueOf(orderStatus);
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        if(orderStatus != null) {
+            this.orderStatus = orderStatus.getCode();
+        }
     }
 
     public Double getTotal() {
