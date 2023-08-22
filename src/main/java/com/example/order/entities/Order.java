@@ -1,5 +1,6 @@
 package com.example.order.entities;
 
+import com.example.order.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -27,7 +28,10 @@ public class Order implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
 
+    private OrderStatus orderStatus;
+
     @ManyToOne
     @JoinColumn(name = "clientId")
     private User client;
+
 }
