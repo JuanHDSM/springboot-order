@@ -1,14 +1,13 @@
 package com.example.order.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jdk.jfr.Unsigned;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,9 +15,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "tb_user")
-public class User implements Serializable {
-
+@Table(name = "tb_product")
+public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -26,13 +24,13 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String email;
-    private String phone;
-    private String password;
+    private String description;
+    private Double price;
+    private String imgURL;
 
+    @Transient
     @Setter(AccessLevel.NONE)
-    @JsonIgnore
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders = new ArrayList<>();
-
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Set<Category> categories = new HashSet<>();
 }
