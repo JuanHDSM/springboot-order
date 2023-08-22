@@ -27,9 +27,9 @@ public class Category implements Serializable {
     private Long id;
     private String name;
 
-    @Transient
-    @Setter(AccessLevel.NONE)
     @JsonIgnore
-    @OneToMany(mappedBy = "categories")
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
+
 }

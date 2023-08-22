@@ -1,7 +1,7 @@
 package com.example.order.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jdk.jfr.Unsigned;
 import lombok.*;
 
 import java.io.Serial;
@@ -28,9 +28,18 @@ public class Product implements Serializable {
     private Double price;
     private String imgURL;
 
-    @Transient
     @Setter(AccessLevel.NONE)
-    @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    public Product(Long id, String name, String description, Double price, String imgURL) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgURL = imgURL;
+    }
 }
