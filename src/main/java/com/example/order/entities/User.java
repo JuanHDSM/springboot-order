@@ -1,5 +1,6 @@
 package com.example.order.entities;
 
+import com.example.order.entities.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,4 +36,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 }
